@@ -3,14 +3,14 @@
 ## Data Covered for Commands ##
 
 ### Preparation for data migration via UVM ###
-1. New storage: raidcom add ldev -ldev_id 00:3C:00 -capacity 251658240 -pool 0
-2. New storage: raidcom modify ldev -ldev_id 00:3C:00 -ldev_name AML_App_1_DM_DUMMY
-3. New storage: raidcom add lun -port CL1-E-254 -ldev_id 00:3C:00
-4. Old storage: raidcom add lun -port CL1-G-250 -ldev_id 00:07:38 -lun_id 131
-5. New storage: raidcom add host_grp -port CL1-C -host_grp_name FATCA_BPM_DR1
-6. New storage: raidcom modify host_grp -port CL1-C FATCA_BPM_DR1 -host_mode AIX
-7. New storage: virtualize E-LUNs
-8. New storage, for those successfully virtualized only: raidcom add lun -port CL5-G AML_APP1_DR2 -ldev_id 00:3A:00 -lun_id 0
+1. Target storage: raidcom add ldev -ldev_id 00:3C:00 -capacity 251658240 -pool 0
+2. Target storage: raidcom modify ldev -ldev_id 00:3C:00 -ldev_name AML_App_1_DM_DUMMY
+3. Target storage: raidcom add lun -port CL1-E-254 -ldev_id 00:3C:00
+4. Source storage: raidcom add lun -port CL1-G-250 -ldev_id 00:07:38 -lun_id 131
+5. Target storage: raidcom add host_grp -port CL1-C -host_grp_name FATCA_BPM_DR1
+6. Target storage: raidcom modify host_grp -port CL1-C FATCA_BPM_DR1 -host_mode AIX
+7. Target storage: virtualize E-LUNs
+8. Target storage, for those successfully virtualized only: raidcom add lun -port CL5-G AML_APP1_DR2 -ldev_id 00:3A:00 -lun_id 0
 9. Fabric A: zonecreate EH_G1500_6G_AML_APP1_DR1, "EH_G1500_6G;AML_APP1_DR1"
 10. Fabric B: zonecreate EH_G1500_5G_AML_APP1_DR2, "EH_G1500_5G;AML_APP1_DR2"
 
@@ -22,7 +22,7 @@
     - MariaDB 10.0.36
 
 ## Instructions for WLB ##
-Please refer to `wlb_datastructure.xlsx` for table relationship.
+Please refer to `wlb_datastructure.txt` for table relationship.
 
 ### Collect data ###
 1. Source `01_create_db_tables.sql` to create databases and tables.
