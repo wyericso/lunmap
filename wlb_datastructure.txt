@@ -1,37 +1,34 @@
-CREATE DATABASE vspg;
-USE vspg;
-
 CREATE TABLE wlb_server (
-    System VARCHAR(50),             # matches with wlb_hostgrp_wwn.System
-    Server VARCHAR(50) UNIQUE,      # matches with wlb_hostgrp_wwn.Server
+    System VARCHAR(50),             *
+    Server VARCHAR(50) UNIQUE,      *
     MigrationMethod VARCHAR(50),
     PowerHAorHACMP VARCHAR(1),
     Batch VARCHAR(2),
     Grp VARCHAR(2)
 );
 CREATE TABLE wlb_hostgrp_wwn (
-    System VARCHAR(50),             # matches with wlb_server.System
-    Server VARCHAR(50),             # matches with wlb_server.Server
-    Port VARCHAR(2),                # matches with wwninfo.Port
-    HostgroupNum VARCHAR(2),        # matches with wwninfo.HostgroupNum
-    WWN VARCHAR(16)                 # matches with wwninfo.WWN
+*   System VARCHAR(50),
+*   Server VARCHAR(50),
+    Port VARCHAR(2),                *
+    HostgroupNum VARCHAR(2),        *
+    WWN VARCHAR(16)                 *
 );
 CREATE TABLE wwninfo (
-    Port VARCHAR(2),                # matches with wlb.Port, luninfo.Port
-    Hostgroup VARCHAR(50),          # matches with luninfo.Hostgroup
-    HostMode VARCHAR(50),           # matches with luninfo.HostMode
-    HostModeOption VARCHAR(50),     # matches with luninfo.HostModeOption
-    WWN VARCHAR(16),                # matches with wlb.WWN
+*    Port VARCHAR(2),               *
+    Hostgroup VARCHAR(50),          *
+    HostMode VARCHAR(50),           *
+    HostModeOption VARCHAR(50),     *
+*    WWN VARCHAR(16),
     Nickname VARCHAR(50),
-    HostgroupNum VARCHAR(2)         # matches with wlb.HostgroupNum
+*    HostgroupNum VARCHAR(2)
 );
 CREATE TABLE luninfo (
-    Port VARCHAR(2),                # matches with wwninfo.Port
-    Hostgroup VARCHAR(50),          # matches with wwninfo.Hostgroup
-    HostMode VARCHAR(50),           # matches with wwninfo.HostMode
-    HostModeOption VARCHAR(50),     # matches with wwninfo.HostModeOption
+*    Port VARCHAR(2),
+*    Hostgroup VARCHAR(50),
+*    HostMode VARCHAR(50),
+*    HostModeOption VARCHAR(50),
     LUN VARCHAR(4),
-    LDEV VARCHAR(8),                # matches with ldevinfo.LDEV
+    LDEV VARCHAR(8),                *
     NumberOfLDEVs VARCHAR(4),
     CommandDevice VARCHAR(50),
     CommandSecurity VARCHAR(50),
@@ -43,7 +40,7 @@ CREATE TABLE luninfo (
 );
 CREATE TABLE ldevinfo (
     ECCGroup VARCHAR(50),
-    LDEV VARCHAR(8),               # matches with luninfo.LDEV, virtualization.LDEV
+*    LDEV VARCHAR(8),               *
     LDEVName VARCHAR(50),
     LDEVEmulation VARCHAR(50),
     LDEVType VARCHAR(50),
@@ -71,7 +68,7 @@ CREATE TABLE ldevinfo (
     ResourceGroupName VARCHAR(50)
 );
 CREATE TABLE virtualization (
-    LDEV VARCHAR(8) UNIQUE,         # matches with ldevinfo.LDEV
+*    LDEV VARCHAR(8) UNIQUE,
     ELUNID VARCHAR(4) UNIQUE,
     DestLDEV VARCHAR(8) UNIQUE,
     DummyLDEV VARCHAR(8) UNIQUE,

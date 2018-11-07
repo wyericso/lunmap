@@ -1,0 +1,7 @@
+USE vspg;
+
+LOAD DATA LOCAL INFILE 'wlb_hostgrp_wwn.csv'
+INTO TABLE wlb_hostgrp_wwn
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES;

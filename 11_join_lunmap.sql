@@ -1,17 +1,18 @@
 use vspg;
 CREATE TABLE lunmap
 SELECT 
-    wlb.System,
-    wlb.Server,
-    wlb.Port,
-    wlb.HostgroupNum,
-    wlb.WWN,
-    wlb.MigrationMethod,
-    wlb.PowerHAorHACMP,
+    wlb_server.System,
+    wlb_server.Server,
+    wlb_server.MigrationMethod,
+    wlb_server.PowerHAorHACMP,
+    wlb_server.Batch,
+    wlb_server.Grp,
+    wlb_hostgrp_wwn.Port,
+    wlb_hostgrp_wwn.HostgroupNum,
+    wlb_hostgrp_wwn.WWN,
     wwninfo.Hostgroup,
     wwninfo.HostMode,
     wwninfo.HostModeOption,
-    wwninfo.Nickname,
     luninfo.LUN,
     luninfo.LDEV,
     luninfo.NumberOfLDEVs,
@@ -43,15 +44,18 @@ SELECT
     ldevinfo.CmdDevSecurity,
     ldevinfo.CmdDevUserAuth,
     ldevinfo.CmdDevDevGrpDef
-FROM wlb
-LEFT JOIN wwninfo
-    ON wlb.wwn = wwninfo.wwn
-    AND wlb.Port = wwninfo.Port
-    AND wlb.HostgroupNum = wwninfo.HostgroupNum
-    LEFT JOIN luninfo
-        ON wwninfo.Hostgroup = luninfo.Hostgroup
-        AND wwninfo.HostMode = luninfo.HostMode
-        AND wwninfo.HostModeOption = luninfo.HostModeOption
-        AND wwninfo.Port = luninfo.Port
-        LEFT JOIN ldevinfo
-            ON luninfo.LDEV = ldevinfo.LDEV;
+FROM wlb_server
+INNER JOIN wlb_hostgrp_wwn
+    ON wlb_server.System = wlb_hostgrp_wwn.System
+    AND wlb_server.Server = wlb_hostgrp_wwn.Server
+    INNER JOIN wwninfo
+        ON wlb_hostgrp_wwn.Port = wwninfo.Port
+        AND wlb_hostgrp_wwn.HostgroupNum = wwninfo.HostgroupNum
+        AND wlb_hostgrp_wwn.WWN = wwninfo.WWN
+        INNER JOIN luninfo
+            ON wwninfo.Port = luninfo.Port
+            AND wwninfo.Hostgroup = luninfo.Hostgroup
+            AND wwninfo.HostMode = luninfo.HostMode
+            AND wwninfo.HostModeOption = luninfo.HostModeOption
+            INNER JOIN ldevinfo
+                ON luninfo.LDEV = ldevinfo.LDEV;
